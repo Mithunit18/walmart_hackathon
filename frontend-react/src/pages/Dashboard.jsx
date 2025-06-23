@@ -95,8 +95,8 @@ function Dashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
+    <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 dark:bg-gray-900 p-6">
+      <div className="w-full mx-auto bg-gray-50 dark:bg-gray-800 rounded-xl shadow-md p-8">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
             WELCOME, {userData.username.toUpperCase()}
@@ -127,14 +127,14 @@ function Dashboard() {
 
 
         {userData.role === "Buyer" && (
-          <div className="text-center mb-6 space-y-3 space-x-3">
+          <div className="text-center mb-6 space-y-4 space-x-3">
             <Link to="/browse">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">
+              <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg mb-4">
                 purchase Products
               </button>
             </Link>
             <Link to="/my-orders">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">
+              <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg">
                 View you Orders
               </button>
             </Link>
@@ -231,14 +231,14 @@ function Dashboard() {
         {filteredProducts.length === 0 ? (
           <p className="text-gray-500">No products to display.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {filteredProducts.map((p) => (
-              <div key={p._id} className="bg-gray-50 dark:bg-gray-700 rounded p-4 shadow">
+              <div key={p._id} className="bg-gray-100 dark:bg-gray-700 hover:shadow-gray-500 border border-gray-400 rounded-xl p-4 shadow hover:-translate-y-1 transition-transform">
                 {p.imageUrl && (
                   <img
                     src={p.imageUrl}
                     alt="product image"
-                    className="w-full h-48 object-contain rounded-md mb-4 shadow"
+                    className="w-full h-48 object-contain rounded-md mb-4 "
                   />
                 )}
                 <div className="space-y-1">

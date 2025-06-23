@@ -15,7 +15,6 @@ function AddProduct() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [role, setRole] = useState("");
-  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -62,9 +61,14 @@ function AddProduct() {
     return Object.keys(newErrors).length === 0;
   };
 
-const handleImageChange = (e) => {
-  setImageFile(e.target.files[0]);
-};
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData(prev => ({ ...prev, image: reader.result }));
+    };
+    if (file) reader.readAsDataURL(file);
+  };
 
 
   const handleSubmit = async (e) => {
@@ -107,7 +111,7 @@ const handleImageChange = (e) => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-500"
             />
             {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
           </div>
@@ -123,7 +127,7 @@ const handleImageChange = (e) => {
               value={formData.price}
               onChange={handleChange}
               required
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-500"
             />
             {errors.price && <span className="text-red-500 text-sm">{errors.price}</span>}
           </div>
@@ -139,7 +143,7 @@ const handleImageChange = (e) => {
               value={formData.quantity}
               onChange={handleChange}
               required
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-500"
             />
             {errors.quantity && <span className="text-red-500 text-sm">{errors.quantity}</span>}
           </div>
@@ -154,7 +158,7 @@ const handleImageChange = (e) => {
               value={formData.location}
               onChange={handleChange}
               required
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-500"
             />
             {errors.location && <span className="text-red-500 text-sm">{errors.location}</span>}
           </div>
@@ -168,14 +172,14 @@ const handleImageChange = (e) => {
               accept="image/*"
               onChange={handleImageChange}
               required
-              className="w-full p-2 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-2 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
             {errors.image && <span className="text-red-500 text-sm">{errors.image}</span>}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition duration-300 ease-in-out"
+            className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition duration-300 ease-in-out"
           >
             Add Product
           </button>

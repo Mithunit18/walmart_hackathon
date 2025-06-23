@@ -13,12 +13,15 @@ import AdminRequestList from './pages/AdminRequestList';
 import ProductRequestForm from './pages/ProductRequestForm';
 import SellerRequestList from './pages/SellerRequestList';
 import MyOffers from './pages/MyOffers';
+import Home from './pages/Home';
+
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <Routes>
         {/* Public route for authentication */}
-        <Route path="/" element={<AuthPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<AuthPage />} />
 
         {/* Authenticated routes for all roles */}
         <Route element={<ProtectedRoute allowedRoles={["Admin", "Seller", "Buyer", "Owner"]} />}>

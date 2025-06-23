@@ -33,7 +33,7 @@ function AuthPage() {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1500);
-      
+
     } catch {
       setLoginError("Invalid credentials or server error.");
       toast.error("Login failed. Please check your credentials."); // Show error toast
@@ -72,17 +72,18 @@ function AuthPage() {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
-      style={{ backgroundImage: 'url(/images/background.jpg.png)' }} // Background image
+      className="min-h-screen bg-cover bg-no-repeat bg-center flex items-center justify-center px-4"
+      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.5)), url('/images/background.jpg.png')`, }} // Background image
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col md:flex-row gap-60 w-full max-w-5xl justify-center"
+        transition={{ duration: 2 , ease: 'easeOut' }}
+        className="flex flex-col mt-4 sm:mt-0 md:flex-row gap-10 md:gap-20 lg:gap-32 xl:gap-60 w-full max-w-6xl px-4 justify-center"
       >
         {/* Login Box */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-12 w-full max-w-md bg-opacity-80">
-          <h2 className="text-2xl font-bold text-gray-700 dark:text-blue-200 mb-6 text-center">Login</h2>
+        <div className="bg-gray-700 dark:bg-gray-800 rounded-2xl shadow-md p-12 w-full max-w-md bg-opacity-80">
+          <h2 className="text-2xl  text-gray-300 dark:text-blue-200 mb-6 text-center">Login</h2>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="text"
@@ -90,7 +91,7 @@ function AuthPage() {
               value={loginUsername}
               onChange={(e) => setLoginUsername(e.target.value)}
               ref={loginInputRef} // Ref attached
-              className="w-full p-3 rounded-lg border border-black dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
+              className="w-full p-3 rounded-lg border border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
               required
             />
             <input
@@ -98,13 +99,13 @@ function AuthPage() {
               placeholder="Password"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
-              className="w-full p-3 rounded-lg border border-black dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
+              className="w-full p-3 rounded-lg border  border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
               required
             />
             {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
             <button
               type="submit"
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg"
+              className="w-full bg-purple-600 hover:bg-purple-700 border-purple-900 text-white py-2 rounded-lg"
             >
               Login
             </button>
@@ -112,15 +113,15 @@ function AuthPage() {
         </div>
 
         {/* Signup Box */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-12 w-full max-w-md bg-opacity-80">
-          <h2 className="text-2xl font-bold text-gray-700 dark:text-green-200 mb-6 text-center">Register</h2>
+        <div className="bg-gray-700 dark:bg-gray-800 rounded-2xl shadow-md p-12 w-full max-w-md bg-opacity-80">
+          <h2 className="text-2xl text-gray-300 dark:text-green-200 mb-6 text-center">Register</h2>
           <form onSubmit={handleSignup} className="space-y-4">
             <input
               type="text"
               placeholder="Username"
               value={signupUsername}
               onChange={(e) => setSignupUsername(e.target.value)}
-              className="w-full p-3 rounded-lg border border-black dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
+              className="w-full p-3 rounded-lg border  border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
               required
             />
             <input
@@ -128,13 +129,13 @@ function AuthPage() {
               placeholder="Password"
               value={signupPassword}
               onChange={(e) => setSignupPassword(e.target.value)}
-              className="w-full p-3 rounded-lg border border-black dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
+              className="w-full p-3 rounded-lg border  border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
               required
             />
             <select
               value={signupRole}
               onChange={(e) => setSignupRole(e.target.value)}
-              className="w-full p-3 rounded-lg border border-black dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
+              className="w-full p-3 rounded-lg border  border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
             >
               <option value="Admin">Admin</option>
               <option value="Buyer">Buyer</option>
@@ -145,7 +146,7 @@ function AuthPage() {
             {signupSuccess && <p className="text-green-600 text-sm">{signupSuccess}</p>}
             <button
               type="submit"
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg"
+              className="w-full bg-purple-600 hover:bg-purple-700 border border-purple-900 text-white py-2 rounded-lg"
             >
               Signup
             </button>

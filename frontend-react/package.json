@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "axios": "^1.9.0",
     "chart.js": "^4.4.9",
     "date-fns": "^4.1.0",
@@ -17,6 +18,8 @@
     "framer-motion": "^12.17.3",
     "html2pdf.js": "^0.10.3",
     "jwt-decode": "^4.0.0",
+    "lucide": "^0.518.0",
+    "lucide-react": "^0.518.0",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",

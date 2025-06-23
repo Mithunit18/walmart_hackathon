@@ -128,7 +128,7 @@ function EditProduct() {
                   name="image"
                   accept="image/*"
                   onChange={handleImageChange} // <- handle file separately
-                  className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 hover:border-blue-400 transition duration-200"
+                  className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 hover:border-gray-400 transition duration-200"
                   required
                 />
               ) : (
@@ -137,7 +137,7 @@ function EditProduct() {
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 hover:border-blue-400 transition duration-200"
+                  className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 hover:border-gray-400 transition duration-200"
                   placeholder={`Enter ${field}`}
                   required
                 />

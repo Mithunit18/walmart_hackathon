@@ -127,8 +127,8 @@ function BrowseProducts() {
 
 
   return (
-    <div className="min-h-screen bg-[#f9fafb] p-6">
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-10 border border-gray-200">
+    <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 p-6">
+      <div className="w-full mx-auto bg-gray-50 rounded-2xl shadow-lg p-10 border border-gray-200">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
           Browse Products
         </h2>
@@ -149,35 +149,35 @@ function BrowseProducts() {
             placeholder="🔍 Search by name or location"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-60 px-4 py-2 border rounded-lg shadow-sm"
+            className="w-60 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
           />
           <input
             type="number"
             placeholder="Min Price"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
-            className="w-40 px-4 py-2 border rounded-lg shadow-sm"
+            className="w-40 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
           />
           <input
             type="number"
             placeholder="Max Price"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
-            className="w-40 px-4 py-2 border rounded-lg shadow-sm"
+            className="w-40 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
           />
           <input
             type="number"
             placeholder="Min Quantity"
             value={minQty}
             onChange={(e) => setMinQty(e.target.value)}
-            className="w-40 px-4 py-2 border rounded-lg shadow-sm"
+            className="w-40 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
           />
           <input
             type="number"
             placeholder="Max Quantity"
             value={maxQty}
             onChange={(e) => setMaxQty(e.target.value)}
-            className="w-40 px-4 py-2 border rounded-lg shadow-sm"
+            className="w-40 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
           />
           <button
             onClick={() => {
@@ -217,13 +217,13 @@ function BrowseProducts() {
             {filteredProducts.map((p) => (
               <div
                 key={p._id}
-                className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-transform"
+                className="bg-gray-100 border border-gray-400 hover:border-gray-500 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-transform"
               >
                 {p.imageUrl && (
                   <img
                     src={p.imageUrl}
                     alt="product image"
-                    className="w-full h-48 object-contain rounded-md mb-4 shadow"
+                    className="w-full h-48 object-contain rounded-md mb-4"
                   />
                 )}
                 <h3 className="text-xl font-bold text-gray-800 mb-2">{p.name.toUpperCase()}</h3>
