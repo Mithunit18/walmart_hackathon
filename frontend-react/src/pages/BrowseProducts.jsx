@@ -24,7 +24,10 @@ function BrowseProducts() {
   const [latestOrder, setLatestOrder] = useState(null);
   const [showInvoice, setShowInvoice] = useState(false);
   const [userRole, setUserRole] = useState("");
-
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [invoiceName, setInvoiceName] = useState('');
+  const [invoiceNumber, setInvoiceNumber] = useState('');
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/auth");
@@ -76,6 +79,10 @@ function BrowseProducts() {
       setPurchaseError("Quantity must be at least 1.");
       return;
     }
+    if (!/^\d{10}$/.test(number)) {
+      setPurchaseError("Please enter a valid 10-digit number");
+      return;
+    }
     if (!deliveryAddress.trim()) {
       setPurchaseError("Delivery address is required.");
       return;
@@ -96,6 +103,8 @@ function BrowseProducts() {
           productId: product._id,
           quantity,
           deliveryAddress,
+          number,
+          name,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -103,6 +112,8 @@ function BrowseProducts() {
       );
 
       toast.success("Order placed successfully!");
+      setInvoiceName(name);
+      setInvoiceNumber(number);
       setLatestOrder(res.data.order);
       setSelectedProduct(product);
       setShowInvoicePrompt(true);
@@ -110,6 +121,8 @@ function BrowseProducts() {
       setQuantity(1);
       setDeliveryAddress("");
       setPurchaseError("");
+      setName("");
+      setNumber("");
       fetchProducts(token);
     } catch (err) {
       const error = err.response?.data?.error || "Purchase failed.";
@@ -250,20 +263,34 @@ function BrowseProducts() {
         {selectedProduct && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
-              <h3 className="text-xl font-bold mb-4">Purchase {selectedProduct.name}</h3>
+              <h3 className="text-xl font-semibold text-gray-600 mb-4">Purchase <span className="text-black">{selectedProduct.name.toUpperCase()}</span></h3>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your Name"
+                className="w-full border rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
+              />
+              <input
+                type="number"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                className="w-full border rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                placeholder="Enter your mobile number"
+              />
               <input
                 type="number"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 min="1"
                 max={selectedProduct.quantity}
-                className="w-full px-4 py-2 border rounded-lg mb-4"
+                className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
                 placeholder="Quantity"
               />
               <textarea
                 value={deliveryAddress}
                 onChange={(e) => setDeliveryAddress(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg mb-4"
+                className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
                 placeholder="Delivery Address"
               />
               {purchaseError && <p className="text-red-500 mb-2">{purchaseError}</p>}
@@ -320,6 +347,8 @@ function BrowseProducts() {
             >
               <h2 className="text-2xl font-bold mb-6 text-center">Invoice</h2>
               <p><strong>Order ID:</strong> {latestOrder._id}</p>
+              <p><strong>Name :</strong> {invoiceName}</p>
+              <p><strong>Number :</strong> {invoiceNumber}</p>
               <p><strong>Product:</strong> {selectedProduct.name}</p>
               <p><strong>Quantity:</strong> {latestOrder.quantityPurchased}</p>
               <p><strong>Price per unit:</strong> ₹{selectedProduct.price}</p>

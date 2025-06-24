@@ -2,10 +2,10 @@ const Product = require("../models/Product");
 const Order = require("../models/Order");
 
 exports.purchaseProduct = async (req, res) => {
-  const { productId, quantity, deliveryAddress } = req.body;
+  const { productId, quantity, deliveryAddress, number, name } = req.body;
   const buyer = req.user.username; // from decoded JWT
 
-  if (!productId || !quantity || !deliveryAddress) {
+  if (!productId || !quantity || !deliveryAddress || !number || !name) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -29,6 +29,8 @@ exports.purchaseProduct = async (req, res) => {
       buyer,
       quantityPurchased: quantity,
       deliveryAddress,
+      name,
+      number,
       totalPrice,
       invoiceDetails: {
         generatedAt: new Date(),
