@@ -61,7 +61,7 @@ function App() {
       </Routes>
 
       {/* Global Toast Container */}
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer position="top-center"/>
     </div>
   );
 }
