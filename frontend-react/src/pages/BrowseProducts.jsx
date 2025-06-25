@@ -24,6 +24,9 @@ function BrowseProducts() {
   const [latestOrder, setLatestOrder] = useState(null);
   const [showInvoice, setShowInvoice] = useState(false);
   const [userRole, setUserRole] = useState("");
+  const [phone, setPhone] = useState("");
+  const [buyerName, setBuyerName] = useState("");
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,6 +39,8 @@ function BrowseProducts() {
         return navigate("/dashboard");
       }
       setUserRole(decoded.role);
+      setBuyerName(decoded.username);
+
       fetchProducts(token);
     } catch {
       navigate("/");
@@ -96,6 +101,7 @@ function BrowseProducts() {
           productId: product._id,
           quantity,
           deliveryAddress,
+          phone,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -251,6 +257,23 @@ function BrowseProducts() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
               <h3 className="text-xl font-bold mb-4">Purchase {selectedProduct.name}</h3>
+
+              <input
+                type="text"
+                value={buyerName}
+                readOnly
+                className="w-full px-4 py-2 border rounded-lg mb-4 bg-gray-100"
+                placeholder="Buyer Name"
+              />
+
+              <input
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg mb-4"
+                placeholder="Phone Number"
+              />
+
               <input
                 type="number"
                 value={quantity}
@@ -260,26 +283,32 @@ function BrowseProducts() {
                 className="w-full px-4 py-2 border rounded-lg mb-4"
                 placeholder="Quantity"
               />
+
               <textarea
                 value={deliveryAddress}
                 onChange={(e) => setDeliveryAddress(e.target.value)}
                 className="w-full px-4 py-2 border rounded-lg mb-4"
                 placeholder="Delivery Address"
               />
+
               {purchaseError && <p className="text-red-500 mb-2">{purchaseError}</p>}
-              <button
-                onClick={() => handlePurchase(selectedProduct)}
-                disabled={purchaseLoading}
-                className="w-full px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-              >
-                {purchaseLoading ? "Processing..." : "Confirm Purchase"}
-              </button>
-              <button
-                onClick={() => setSelectedProduct(null)}
-                className="w-full px-4 py-2 bg-gray-400 text-white rounded mt-4 hover:bg-gray-500"
-              >
-                Cancel
-              </button>
+
+            <div className="flex justify-end gap-4 mt-4">
+            <button
+              onClick={() => setSelectedProduct(null)}
+              className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => handlePurchase(selectedProduct)}
+              disabled={purchaseLoading}
+              className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+            >
+              {purchaseLoading ? "Processing..." : "Next"}
+            </button>
+          </div>
+
             </div>
           </div>
         )}
