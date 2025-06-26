@@ -310,7 +310,7 @@ function BrowseProducts() {
                 disabled={purchaseLoading}
                 className="w-full px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
               >
-                Next
+                Pay ₹{selectedProduct.price * quantity}
               </button>
               <button
                 onClick={() => setSelectedProduct(null)}
@@ -348,7 +348,7 @@ function BrowseProducts() {
           }}
           className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
         >
-          Confirm
+          Place Order
         </button>
         <button
           onClick={() => setShowPaymentModePrompt(false)}
