@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from 'react-toastify'; // Import Toast functions
+import { FaHome } from "react-icons/fa";
+
 
 
 function AuthPage() {
@@ -71,10 +73,21 @@ function AuthPage() {
   };
 
   return (
+
     <div
       className="min-h-screen bg-cover bg-no-repeat bg-center flex items-center justify-center px-4"
       style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.5)), url('/images/background.jpg.png')`, }} // Background image
     >
+      <div className="absolute top-6 right-6">
+      <button
+        onClick={() => navigate("/")}
+        className="flex items-center space-x-2 bg-white text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition"
+      >
+        <FaHome className="text-xl" />
+        <span className="hidden sm:inline">Home</span>
+      </button>
+    </div>
+
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}

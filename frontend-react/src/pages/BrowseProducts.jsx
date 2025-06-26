@@ -24,17 +24,13 @@ function BrowseProducts() {
   const [latestOrder, setLatestOrder] = useState(null);
   const [showInvoice, setShowInvoice] = useState(false);
   const [userRole, setUserRole] = useState("");
-<<<<<<< HEAD
-  const [phone, setPhone] = useState("");
-  const [buyerName, setBuyerName] = useState("");
-
-
-=======
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [invoiceName, setInvoiceName] = useState('');
   const [invoiceNumber, setInvoiceNumber] = useState('');
->>>>>>> 863270e61589cb2ff1aca8f6776037bdf6841a00
+  const [showPaymentModePrompt, setShowPaymentModePrompt] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/auth");
@@ -46,8 +42,6 @@ function BrowseProducts() {
         return navigate("/dashboard");
       }
       setUserRole(decoded.role);
-      setBuyerName(decoded.username);
-
       fetchProducts(token);
     } catch {
       navigate("/");
@@ -112,12 +106,9 @@ function BrowseProducts() {
           productId: product._id,
           quantity,
           deliveryAddress,
-<<<<<<< HEAD
-          phone,
-=======
           number,
           name,
->>>>>>> 863270e61589cb2ff1aca8f6776037bdf6841a00
+          paymentMethod,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -276,26 +267,6 @@ function BrowseProducts() {
         {selectedProduct && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
-<<<<<<< HEAD
-              <h3 className="text-xl font-bold mb-4">Purchase {selectedProduct.name}</h3>
-
-              <input
-                type="text"
-                value={buyerName}
-                readOnly
-                className="w-full px-4 py-2 border rounded-lg mb-4 bg-gray-100"
-                placeholder="Buyer Name"
-              />
-
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg mb-4"
-                placeholder="Phone Number"
-              />
-
-=======
               <h3 className="text-xl font-semibold text-gray-600 mb-4">Purchase <span className="text-black">{selectedProduct.name.toUpperCase()}</span></h3>
               <input
                 type="text"
@@ -311,7 +282,6 @@ function BrowseProducts() {
                 className="w-full border rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
                 placeholder="Enter your mobile number"
               />
->>>>>>> 863270e61589cb2ff1aca8f6776037bdf6841a00
               <input
                 type="number"
                 value={quantity}
@@ -321,36 +291,22 @@ function BrowseProducts() {
                 className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
                 placeholder="Quantity"
               />
-
               <textarea
                 value={deliveryAddress}
                 onChange={(e) => setDeliveryAddress(e.target.value)}
                 className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-1 focus:ring-gray-400"
                 placeholder="Delivery Address"
               />
-
               {purchaseError && <p className="text-red-500 mb-2">{purchaseError}</p>}
-<<<<<<< HEAD
-
-            <div className="flex justify-end gap-4 mt-4">
-            <button
-              onClick={() => setSelectedProduct(null)}
-              className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => handlePurchase(selectedProduct)}
-              disabled={purchaseLoading}
-              className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-            >
-              {purchaseLoading ? "Processing..." : "Next"}
-            </button>
-          </div>
-
-=======
               <button
-                onClick={() => handlePurchase(selectedProduct)}
+                onClick={() => {
+                if (!name || !number || !deliveryAddress || quantity <= 0) {
+                  setPurchaseError("All fields must be filled correctly.");
+                  return;
+                }
+                setShowPaymentModePrompt(true);
+              }}
+
                 disabled={purchaseLoading}
                 className="w-full px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
               >
@@ -362,11 +318,50 @@ function BrowseProducts() {
               >
                 Cancel
               </button>
->>>>>>> 863270e61589cb2ff1aca8f6776037bdf6841a00
             </div>
           </div>
         )}
 
+        {showPaymentModePrompt && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+        <h3 className="text-lg font-semibold mb-4">Select Payment Method</h3>
+        <select
+          value={paymentMethod}
+          onChange={(e) => setPaymentMethod(e.target.value)}
+          className="w-full border px-4 py-2 mb-4 rounded"
+        >
+          <option value="">-- Choose Payment Mode --</option>
+          <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="UPI">UPI</option>
+        <option value="Paytm">Paytm</option>
+      </select>
+      {paymentMethod === "" && (
+        <p className="text-red-500 mb-2 text-sm">Please select a payment method</p>
+      )}
+      <div className="flex justify-end gap-4">
+        <button
+          onClick={() => {
+            if (!paymentMethod) return;
+            setShowPaymentModePrompt(false);
+            handlePurchase(selectedProduct); // Now call actual purchase
+          }}
+          className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+        >
+          Confirm
+        </button>
+        <button
+          onClick={() => setShowPaymentModePrompt(false)}
+          className="px-4 py-2 bg-gray-400 rounded hover:bg-gray-500"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+      
         {/* Invoice Prompt */}
         {showInvoicePrompt && latestOrder && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -435,4 +430,4 @@ function BrowseProducts() {
   );
 }
 
-export default BrowseProducts;
+export default BrowseProducts;

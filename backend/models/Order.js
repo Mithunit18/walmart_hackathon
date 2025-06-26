@@ -10,10 +10,6 @@ const orderSchema = new mongoose.Schema({
     type: String, // can be buyer's username or userId based on your JWT
     required: true,
   },
-  phone: {
-    type: String,
-    required: true,
-  },
   quantityPurchased: {
     type: Number,
     required: true,
@@ -39,7 +35,7 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  invoiceDetails: {
+   invoiceDetails: {
     // Invoice-related information
     generatedAt: { type: Date },
     items: [
@@ -54,4 +50,4 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

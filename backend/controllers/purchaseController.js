@@ -2,18 +2,10 @@ const Product = require("../models/Product");
 const Order = require("../models/Order");
 
 exports.purchaseProduct = async (req, res) => {
-<<<<<<< HEAD
-  const { productId, quantity, deliveryAddress, phone } = req.body;
-  const buyer = req.user.username; // from decoded JWT
-
-  // Validate input
-  if (!productId || !quantity || !deliveryAddress || !phone) {
-=======
   const { productId, quantity, deliveryAddress, number, name } = req.body;
   const buyer = req.user.username; // from decoded JWT
 
   if (!productId || !quantity || !deliveryAddress || !number || !name) {
->>>>>>> 863270e61589cb2ff1aca8f6776037bdf6841a00
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -35,7 +27,6 @@ exports.purchaseProduct = async (req, res) => {
     const newOrder = new Order({
       productId,
       buyer,
-      phone,
       quantityPurchased: quantity,
       deliveryAddress,
       name,
@@ -65,6 +56,6 @@ exports.purchaseProduct = async (req, res) => {
     res.status(201).json({ message: "Purchase successful!", order: newOrder });
   } catch (err) {
     console.error("Purchase error:", err);
-    res.status(500).json({ error: "Something went wrong." });
-  }
+    res.status(500).json({ error: "Something went wrong." });
+  }
 };

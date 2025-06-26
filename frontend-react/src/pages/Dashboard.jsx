@@ -55,7 +55,7 @@ function Dashboard() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("You have been logged out!");
-    navigate("/");
+    navigate("/auth");
   };
 
   const handleDelete = async (id) => {
