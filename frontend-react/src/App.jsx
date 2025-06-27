@@ -1,6 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
 import AddProduct from "./pages/AddProduct";
@@ -14,6 +12,7 @@ import ProductRequestForm from './pages/ProductRequestForm';
 import SellerRequestList from './pages/SellerRequestList';
 import MyOffers from './pages/MyOffers';
 import Home from './pages/Home';
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -59,9 +58,7 @@ function App() {
         </Route>
 
       </Routes>
-
-      {/* Global Toast Container */}
-      <ToastContainer position="top-center"/>
+      <Toaster/>
     </div>
   );
 }

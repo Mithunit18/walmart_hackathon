@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { CSVLink } from "react-csv";
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -34,13 +34,6 @@ function Dashboard() {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    if (location.state?.toastMessage) {
-      toast.success(location.state.toastMessage);
-      navigate(location.pathname, { replace: true, state: {} });
-    }
-  }, [location, navigate]);
-
   const fetchProducts = async (token) => {
     try {
       const res = await axios.get("http://localhost:5000/api/products", {
@@ -65,7 +58,7 @@ function Dashboard() {
         await axios.delete(`http://localhost:5000/api/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        alert("Product deleted successfully.");
+        toast.success("Product deleted successfully.");
         setProducts(products.filter((p) => p._id !== id));
       } catch (err) {
         console.error("Delete failed:", err);
@@ -107,18 +100,18 @@ function Dashboard() {
         {userData.role === "Seller" && (
           <div className="text-center mb-6 space-y-3 space-x-4">
             <Link to="/add-product">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-4">
                 Add New Product
               </button>
             </Link>
             <Link to="/seller-requests">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-4">
                 View Requests
               </button>
             </Link>
             <Link to="/seller/my-offers">
 
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-4">
                 My Offers
               </button>
             </Link>
@@ -134,7 +127,7 @@ function Dashboard() {
               </button>
             </Link>
             <Link to="/my-orders">
-              <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg">
+              <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg mb-4">
                 View you Orders
               </button>
             </Link>

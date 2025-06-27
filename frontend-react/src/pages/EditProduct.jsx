@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 function EditProduct() {
   const { id } = useParams();
@@ -97,8 +97,8 @@ function EditProduct() {
       await axios.put(`http://localhost:5000/api/products/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      navigate("/dashboard", { state: { toastMessage: "Product updated successfully." } });
+      toast.success("Product Updated Successfully");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Update failed", error);
       toast.error("Failed to update product.");

@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const ProtectedRoute = ({ allowedRoles }) => {
   const location = useLocation();

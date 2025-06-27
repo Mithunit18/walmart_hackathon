@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { toast, ToastContainer } from 'react-toastify'; // Import Toast functions
+import { toast } from 'react-hot-toast'; // Import Toast functions
 import { FaHome } from "react-icons/fa";
 
 
@@ -166,9 +166,6 @@ function AuthPage() {
           </form>
         </div>
       </motion.div>
-
-      {/* ToastContainer for Toast notifications */}
-      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
 }

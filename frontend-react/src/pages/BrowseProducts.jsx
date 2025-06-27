@@ -2,9 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import html2pdf from "html2pdf.js";
-import "react-toastify/dist/ReactToastify.css";
+
 
 function BrowseProducts() {
   const navigate = useNavigate();

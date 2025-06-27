@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 function AddProduct() {
   const [formData, setFormData] = useState({
@@ -81,11 +83,11 @@ function AddProduct() {
       await axios.post("http://localhost:5000/api/products", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("✅ Product added successfully!");
+      toast.success("Product added successfully!");
       navigate("/dashboard");
     } catch (err) {
       console.error("Error adding product:", err);
-      alert("❌ Failed to add product.");
+      toast.error("Failed to add product.");
     }
   };
 

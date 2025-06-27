@@ -1,7 +1,7 @@
 // ADD AT THE TOP
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const AdminRequestList = () => {
   const [requests, setRequests] = useState([]);
