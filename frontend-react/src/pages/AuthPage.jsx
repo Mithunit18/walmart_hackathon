@@ -20,7 +20,8 @@ function AuthPage() {
   const [signupError, setSignupError] = useState("");
   const [signupSuccess, setSignupSuccess] = useState("");
   const [loadLogin,setLoadLogin] = useState(false);
-  const [signIn,setSignIn] = useState(false);  
+  const [signIn,setSignIn] = useState(false); 
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000"; 
 
   const loginInputRef = useRef(null); // Reference to login username input
 
@@ -29,7 +30,7 @@ function AuthPage() {
     setLoginError("");
     setLoadLogin(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         username: loginUsername,
         password: loginPassword,
       });
@@ -50,7 +51,7 @@ function AuthPage() {
     setSignupSuccess("");
     setSignIn(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post(`${BASE_URL}/api/auth/register`, {
         username: signupUsername,
         password: signupPassword,
         role: signupRole,
