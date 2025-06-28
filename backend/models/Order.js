@@ -10,6 +10,14 @@ const orderSchema = new mongoose.Schema({
     type: String, // can be buyer's username or userId based on your JWT
     required: true,
   },
+  productName: {
+    type: String,
+    required:true,
+  },
+  unitPrice: {
+    type: String,
+    required: true
+  },
   quantityPurchased: {
     type: Number,
     required: true,

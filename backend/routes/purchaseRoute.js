@@ -56,8 +56,8 @@ router.get("/my-orders", authMiddleware, async (req, res) => {
 
     const formatted = orders.map((order) => ({
       orderId: order._id,
-      productName: order.productId.name,
-      unitPrice: order.productId.price,
+      productName: order.productName,
+      unitPrice: order.unitPrice,
       quantity: order.quantityPurchased,
       totalPrice: order.totalPrice,
       deliveryAddress: order.deliveryAddress,

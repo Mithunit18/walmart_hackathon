@@ -27,6 +27,8 @@ exports.purchaseProduct = async (req, res) => {
     const newOrder = new Order({
       productId,
       buyer,
+      productName: product.name,
+      unitPrice: product.price,
       quantityPurchased: quantity,
       deliveryAddress,
       name,
