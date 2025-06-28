@@ -12,9 +12,9 @@ connectDB();
 const app = express();
 
 // ✅ CORS Configuration
-app.use(cors({
-  origin: ["http://localhost:5173","https://walmart-hackathon-blue.vercel.app"], // React frontend
-  credentials: true,
+app.options('*', cors({
+  origin: ["http://localhost:5173","https://walmart-hackathon-blue.vercel.app"],
+  credentials: true
 }));
 
 // Middleware
