@@ -12,6 +12,7 @@ const AdminRequestList = () => {
   const [offersMap, setOffersMap] = useState({});
   const [viewingRequestId, setViewingRequestId] = useState(null);
   const [acceptingOfferId, setAcceptingOfferId] = useState(null);
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     fetchRequests();
@@ -22,7 +23,7 @@ const AdminRequestList = () => {
     setError(null);
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/requests', {
+      const { data } = await axios.get(`${BASE_URL}/api/requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRequests(data);
@@ -38,7 +39,7 @@ const AdminRequestList = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/requests/${requestId}/broadcast`,
+        `${BASE_URL}/api/requests/${requestId}/broadcast`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -62,7 +63,7 @@ const AdminRequestList = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get(`http://localhost:5000/api/offers/request/${requestId}`, {
+      const { data } = await axios.get(`${BASE_URL}/api/offers/request/${requestId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOffersMap((prev) => ({ ...prev, [requestId]: data }));
@@ -77,7 +78,7 @@ const AdminRequestList = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/offers/${offerId}/accept`,
+        `${BASE_URL}/api/offers/${offerId}/accept`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

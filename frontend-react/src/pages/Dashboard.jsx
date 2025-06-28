@@ -15,6 +15,7 @@ function Dashboard() {
   const [maxPrice, setMaxPrice] = useState("");
   const [minQty, setMinQty] = useState("");
   const [maxQty, setMaxQty] = useState("");
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,7 +37,7 @@ function Dashboard() {
 
   const fetchProducts = async (token) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products", {
+      const res = await axios.get(`${BASE_URL}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -55,7 +56,7 @@ function Dashboard() {
     const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`, {
+        await axios.delete(`${BASE_URL}/api/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success("Product deleted successfully.");

@@ -30,6 +30,7 @@ function BrowseProducts() {
   const [invoiceNumber, setInvoiceNumber] = useState('');
   const [showPaymentModePrompt, setShowPaymentModePrompt] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -50,7 +51,7 @@ function BrowseProducts() {
 
   const fetchProducts = async (token) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products", {
+      const res = await axios.get(`${BASE_URL}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -101,7 +102,7 @@ function BrowseProducts() {
     setPurchaseLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/purchase",
+        `${BASE_URL}/api/purchase`,
         {
           productId: product._id,
           quantity,

@@ -7,6 +7,7 @@ const SellerNotifiedRequests = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [submittedOffers, setSubmittedOffers] = useState([]);
+  const [load,setLoad] = useState(false);
   const [offerData, setOfferData] = useState({
     product: '',
     quantity: '',
@@ -15,6 +16,7 @@ const SellerNotifiedRequests = () => {
     location: '',
     image: ''
   });
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     fetchNotifiedRequests();
@@ -25,7 +27,7 @@ const SellerNotifiedRequests = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/requests/notified', {
+      const { data } = await axios.get(`${BASE_URL}/api/requests/notified`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRequests(data);
@@ -39,7 +41,7 @@ const SellerNotifiedRequests = () => {
   const fetchSubmittedOffers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/offers/seller/my-offers', {
+      const { data } = await axios.get(`${BASE_URL}/api/offers/seller/my-offers`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSubmittedOffers(data); // data is array of request IDs
@@ -58,10 +60,11 @@ const SellerNotifiedRequests = () => {
   };
 
   const handleSubmitOffer = async () => {
+    setLoad(true);
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/offers/${selectedRequest._id}`,
+        `${BASE_URL}/api/offers/${selectedRequest._id}`,
         offerData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -73,6 +76,8 @@ const SellerNotifiedRequests = () => {
     } catch (err) {
       console.error(err);
       toast.error('Failed to submit offer');
+    } finally {
+      setLoad(false);
     }
   };
 
@@ -196,8 +201,9 @@ const SellerNotifiedRequests = () => {
               <button
                 onClick={handleSubmitOffer}
                 className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+                disabled={load}
               >
-                Submit
+                {load ? "Submitting..." : "Submit" }
               </button>
             </div>
           </div>

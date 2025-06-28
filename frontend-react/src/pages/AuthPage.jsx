@@ -19,12 +19,15 @@ function AuthPage() {
   const [signupRole, setSignupRole] = useState("Buyer");
   const [signupError, setSignupError] = useState("");
   const [signupSuccess, setSignupSuccess] = useState("");
+  const [loadLogin,setLoadLogin] = useState(false);
+  const [signIn,setSignIn] = useState(false);  
 
   const loginInputRef = useRef(null); // Reference to login username input
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError("");
+    setLoadLogin(true);
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", {
         username: loginUsername,
@@ -36,6 +39,8 @@ function AuthPage() {
     } catch {
       setLoginError("Invalid credentials or server error.");
       toast.error("Login failed. Please check your credentials."); // Show error toast
+    } finally {
+      setLoadLogin(false);
     }
   };
 
@@ -43,6 +48,7 @@ function AuthPage() {
     e.preventDefault();
     setSignupError("");
     setSignupSuccess("");
+    setSignIn(true);
     try {
       await axios.post("http://localhost:5000/api/auth/register", {
         username: signupUsername,
@@ -66,6 +72,8 @@ function AuthPage() {
         setSignupError("Server error.");
         toast.error("Server error. Please try again later."); // Show error toast
       }
+    } finally {
+      setSignIn(false);
     }
   };
 
@@ -116,8 +124,9 @@ function AuthPage() {
             <button
               type="submit"
               className="w-full bg-purple-600 hover:bg-purple-700 border-purple-900 text-white py-2 rounded-lg"
+              disabled={loadLogin}
             >
-              Login
+              {loadLogin ? "Logging in..." : "Login"}
             </button>
           </form>
         </div>
@@ -157,8 +166,9 @@ function AuthPage() {
             <button
               type="submit"
               className="w-full bg-purple-600 hover:bg-purple-700 border border-purple-900 text-white py-2 rounded-lg"
+              disabled={setSignIn}
             >
-              Signup
+              {signIn ? "Signning in" : "signIn"}
             </button>
           </form>
         </div>

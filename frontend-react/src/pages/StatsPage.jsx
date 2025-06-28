@@ -17,6 +17,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Le
 
 function StatsPage() {
   const navigate = useNavigate();
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalSellers: 0,
@@ -48,7 +49,7 @@ function StatsPage() {
 
   const fetchStats = async (token) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/stats", {
+      const res = await axios.get(`${BASE_URL}/api/stats`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

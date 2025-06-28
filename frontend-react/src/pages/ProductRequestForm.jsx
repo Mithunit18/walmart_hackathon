@@ -12,6 +12,7 @@ const ProductRequestForm = () => {
     urgency: 'Medium',
   });
   const [loading, setLoading] = useState(false);
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const { productName, description, quantity, urgency } = formData;
 
@@ -33,7 +34,7 @@ const ProductRequestForm = () => {
   setLoading(true);
   try {
     const res = await axios.post(
-      'http://localhost:5000/api/requests',
+      `${BASE_URL}/api/requests`,
       { productName, description, quantity, urgency },
       {
         headers: {

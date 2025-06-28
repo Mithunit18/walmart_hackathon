@@ -18,6 +18,8 @@ function AddProduct() {
   const navigate = useNavigate();
   const [role, setRole] = useState("");
 
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -80,7 +82,7 @@ function AddProduct() {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.post("http://localhost:5000/api/products", formData, {
+      await axios.post(`${BASE_URL}/api/products`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Product added successfully!");

@@ -16,6 +16,7 @@ function EditProduct() {
   });
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -35,7 +36,7 @@ function EditProduct() {
 
   const fetchProduct = async (token, decoded) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products", {
+      const res = await axios.get(`${BASE_URL}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -94,7 +95,7 @@ function EditProduct() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:5000/api/products/${id}`, formData, {
+      await axios.put(`${BASE_URL}/api/products/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Product Updated Successfully");

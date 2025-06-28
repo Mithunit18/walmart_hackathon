@@ -7,6 +7,7 @@ function ProductList() {
   const [products, setProducts] = useState([]);
   const [role, setRole] = useState("");
   const navigate = useNavigate();
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,7 +18,7 @@ function ProductList() {
       setRole(decoded.role);
 
       axios
-        .get("http://localhost:5000/api/products", {
+        .get(`${BASE_URL}/api/products`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setProducts(res.data))

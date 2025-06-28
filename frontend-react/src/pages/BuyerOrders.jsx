@@ -8,6 +8,7 @@ function BuyerOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
+   const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     fetchOrders();
@@ -17,7 +18,7 @@ function BuyerOrders() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/purchase/my-orders", {
+      const res = await axios.get(`${BASE_URL}/api/purchase/my-orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
