@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 function BuyerOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-   const navigate = useNavigate();
-   const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
   useEffect(() => {
     fetchOrders();

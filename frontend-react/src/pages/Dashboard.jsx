@@ -15,7 +15,8 @@ function Dashboard() {
   const [maxPrice, setMaxPrice] = useState("");
   const [minQty, setMinQty] = useState("");
   const [maxQty, setMaxQty] = useState("");
-  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -100,25 +101,25 @@ function Dashboard() {
 
         {userData.role === "Seller" && (
           <>
-          <div className="text-center mb-6 space-y-3 space-x-4">
-            <Link to="/add-product">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-6">
-                Add New Product
-              </button>
-            </Link>
-            <Link to="/seller-requests">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-7 rounded-lg mb-6 sm:ml-0 ml-[-15px]">
-                View Requests
-              </button>
-            </Link>
-            <Link to="/seller/my-offers">
+            <div className="text-center mb-6 space-y-3 space-x-4">
+              <Link to="/add-product">
+                <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-6">
+                  Add New Product
+                </button>
+              </Link>
+              <Link to="/seller-requests">
+                <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-7 rounded-lg mb-6 sm:ml-0 ml-[-15px]">
+                  View Requests
+                </button>
+              </Link>
+              <Link to="/seller/my-offers">
 
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-11 sm:ml-0 ml-[-15px] rounded-lg">
-                My Offers
-              </button>
-            </Link>
-          </div>
-                      <div className="text-center sm:text-right mb-6">
+                <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-11 sm:ml-0 ml-[-15px] rounded-lg">
+                  My Offers
+                </button>
+              </Link>
+            </div>
+            <div className="text-center sm:text-right mb-6">
               <button
                 onClick={handleLogout}
                 className="bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded-lg"
@@ -166,7 +167,7 @@ function Dashboard() {
         )}
 
         {(userData.role === "Admin" || userData.role === "Owner") && products.length > 0 && (
-         <div className="text-right flex flex-col sm:flex-row sm:justify-end items-center sm:items-start mb-4 space-y-2 sm:space-y-0 sm:space-x-2">
+          <div className="text-right flex flex-col sm:flex-row sm:justify-end items-center sm:items-start mb-4 space-y-2 sm:space-y-0 sm:space-x-2">
             <CSVLink
               data={products.map(p => ({
                 name: p.name,

@@ -21,7 +21,7 @@ function AuthPage() {
   const [signupSuccess, setSignupSuccess] = useState("");
   const [loadLogin,setLoadLogin] = useState(false);
   const [signIn,setSignIn] = useState(false); 
-  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000"; 
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const loginInputRef = useRef(null); // Reference to login username input
 
