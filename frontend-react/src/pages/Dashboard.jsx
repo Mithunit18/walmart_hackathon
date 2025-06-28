@@ -91,51 +91,71 @@ function Dashboard() {
     <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 dark:bg-gray-900 p-6">
       <div className="w-full mx-auto bg-gray-50 dark:bg-gray-800 rounded-xl shadow-md p-8">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+          <h1 className="sm:text-2xl text-xl font-bold text-gray-800 dark:text-white">
             WELCOME, {userData.username.toUpperCase()}
           </h1>
 
         </div>
 
         {userData.role === "Seller" && (
+          <>
           <div className="text-center mb-6 space-y-3 space-x-4">
             <Link to="/add-product">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-4">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-6">
                 Add New Product
               </button>
             </Link>
             <Link to="/seller-requests">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-4">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-7 rounded-lg mb-6 sm:ml-0 ml-[-15px]">
                 View Requests
               </button>
             </Link>
             <Link to="/seller/my-offers">
 
-              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg mb-4">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-11 sm:ml-0 ml-[-15px] rounded-lg">
                 My Offers
               </button>
             </Link>
           </div>
+                      <div className="text-center sm:text-right mb-6">
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded-lg"
+              >
+                Logout
+              </button>
+            </div>
+          </>
         )}
 
 
         {userData.role === "Buyer" && (
-          <div className="text-center mb-6 space-y-4 space-x-3">
-            <Link to="/browse">
-              <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg mb-4">
-                purchase Products
+          <div>
+            <div className="text-center mb-6 space-y-4 space-x-3">
+              <Link to="/browse">
+                <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg mb-6">
+                  purchase Products
+                </button>
+              </Link>
+              <Link to="/my-orders">
+                <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg">
+                  View you Orders
+                </button>
+              </Link>
+            </div>
+            <div className="text-center sm:text-right mb-6">
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded-lg"
+              >
+                Logout
               </button>
-            </Link>
-            <Link to="/my-orders">
-              <button className="bg-purple-600 hover:bg-purple-700 transition-all duration-500 text-white py-2 px-4 rounded-lg mb-4">
-                View you Orders
-              </button>
-            </Link>
+            </div>
           </div>
         )}
 
         {userData.role === "Owner" && (
-          <div className="text-center mb-6">
+          <div className="text-center mb-4">
             <Link to="/owner-stats">
               <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">
                 View Statistics
@@ -145,7 +165,7 @@ function Dashboard() {
         )}
 
         {(userData.role === "Admin" || userData.role === "Owner") && products.length > 0 && (
-          <div className="text-right mb-4">
+         <div className="text-right flex flex-col sm:flex-row sm:justify-end items-center sm:items-start mb-4 space-y-2 sm:space-y-0 sm:space-x-2">
             <CSVLink
               data={products.map(p => ({
                 name: p.name,
@@ -162,10 +182,18 @@ function Dashboard() {
                 { label: "Created By", key: "createdBy" }
               ]}
               filename={"products_export.csv"}
-              className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700"
+              className="bg-purple-600 text-white  py-2  px-4 sm:py-2 sm:px-6 rounded-lg hover:bg-purple-700 mb-2"
             >
               Export to CSV
             </CSVLink>
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 sm:py-2 sm:px-6 rounded-lg"
+            >
+              Logout
+            </button>
+
           </div>
         )}
 
@@ -235,7 +263,7 @@ function Dashboard() {
                   />
                 )}
                 <div className="space-y-1">
-                  <h3 className="text-lg font-bold text-gray-700">{p.name}</h3>
+                  <h3 className="text-lg font-bold text-gray-700">{p.name.toUpperCase()}</h3>
                   <p>Price: ₹{p.price}</p>
                   <p>Quantity: {p.quantity}</p>
                   <p>Location: {p.location}</p>
@@ -244,12 +272,12 @@ function Dashboard() {
                 {(userData.role === "Admin" || (userData.role === "Seller" && p.createdBy === userData.username)) && (
                   <div className="mt-4 flex gap-2">
                     {userData.role !== "Admin" &&
-                    <button
-                      onClick={() => handleEdit(p._id)}
-                      className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded"
-                    >
-                      Edit
-                    </button>
+                      <button
+                        onClick={() => handleEdit(p._id)}
+                        className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded"
+                      >
+                        Edit
+                      </button>
                     }
                     <button
                       onClick={() => handleDelete(p._id)}
@@ -263,15 +291,6 @@ function Dashboard() {
             ))}
           </div>
         )}
-
-        <div className="mt-8 text-center">
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded-lg"
-          >
-            Logout
-          </button>
-        </div>
       </div>
     </div>
   );

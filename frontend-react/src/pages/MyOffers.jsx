@@ -63,7 +63,7 @@ const MyOffers = () => {
                 <div className="space-y-1 text-sm text-gray-700">
                   <p><span className="font-medium">Request Status:</span> {offer.requestId?.status}</p>
                   <p><span className="font-medium">Quantity Offered:</span> {offer.quantity}</p>
-                  <p><span className="font-medium">Offered Price:</span> ${offer.price}</p>
+                  <p><span className="font-medium">Offered Price:</span> &#8377; {offer.price}</p>
                   <p><span className="font-medium">Message:</span> {offer.message || 'N/A'}</p>
                 </div>
 

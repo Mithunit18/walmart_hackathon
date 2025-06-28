@@ -22,18 +22,23 @@ const ProtectedRoute = ({ allowedRoles }) => {
       if (allowedRoles.includes(userRole)) {
         setIsAuthorized(true);
       } else {
-        toast.error("Access denied: You are not authorized to view this page.", {
-          toastId: "unauthorized",
-        });
         setIsAuthorized(false);
       }
     } catch (err) {
       localStorage.removeItem("token");
       setIsAuthorized(false);
     }
-  }, [allowedRoles]);
+  }, []);
 
-  if (isAuthorized === null) return null; // or a loading indicator
+  useEffect(() => {
+    if (isAuthorized === false) {
+      toast.error("Access denied: You are not authorized to view this page.", {
+        toastId: "unauthorized",
+      });
+    }
+  }, [isAuthorized]);
+
+  if (isAuthorized === null) return null;
 
   return isAuthorized ? (
     <Outlet />
