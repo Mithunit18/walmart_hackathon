@@ -157,10 +157,8 @@ function AuthPage() {
               onChange={(e) => setSignupRole(e.target.value)}
               className="w-full p-3 rounded-lg border  border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 dark:border-black bg-white dark:bg-gray-700 text-black dark:text-white"
             >
-              <option value="Admin">Admin</option>
               <option value="Buyer">Buyer</option>
               <option value="Seller">Seller</option>
-              <option value="Owner">Owner</option>
             </select>
             {signupError && <p className="text-red-500 text-sm">{signupError}</p>}
             {signupSuccess && <p className="text-green-600 text-sm">{signupSuccess}</p>}
